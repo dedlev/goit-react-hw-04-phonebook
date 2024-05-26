@@ -5,10 +5,10 @@ export class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
   handleChange = e => {
-    console.log(e.target.value);
     const { name, value } = e.target;
     this.setState({
       [name]: value,
@@ -16,15 +16,17 @@ export class App extends Component {
   };
 
   handleAddContact = () => {
-    const { name } = this.state;
-    if (name) {
+    const { name, number } = this.state;
+    if (name && number) {
       const newContact = {
         id: nanoid(),
         name,
+        number,
       };
       this.setState(prevState => ({
         contacts: [...prevState.contacts, newContact],
         name: '',
+        number: '',
       }));
     }
   };
@@ -45,6 +47,16 @@ export class App extends Component {
             required
           />
 
+          <label htmlFor="numberInput">Number </label>
+          <input
+            id="numberInput"
+            type="tel"
+            name="number"
+            value={this.state.number}
+            onChange={this.handleChange}
+            required
+          />
+
           <button type="button" onClick={this.handleAddContact}>
             Add contact
           </button>
@@ -54,7 +66,9 @@ export class App extends Component {
         <ul>
           {contacts.map(contact => (
             <li key={contact.id}>
-              <p>{contact.name}</p>
+              <p>
+                {contact.name}: {contact.number}
+              </p>
             </li>
           ))}
         </ul>
