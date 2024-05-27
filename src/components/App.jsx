@@ -15,12 +15,32 @@ export class App extends Component {
     filter: '',
   };
 
+  handleDelete = id => {
+    this.setState(prevState => {
+      const newContactsList = prevState.contacts.filter(
+        contact => contact.id !== id
+      );
+      return { contacts: newContactsList };
+    });
+  };
+
   handleAddContact = ({ name, number }) => {
+    const { contacts } = this.state;
+    const isAvailableContact = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isAvailableContact) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+
     const newContact = {
       id: nanoid(4),
       name,
       number,
     };
+
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
     }));
@@ -48,7 +68,7 @@ export class App extends Component {
         <ContactForm onAddContact={this.handleAddContact} />
         <h2>Contacts</h2>
         <Filter name="filter" value={filter} onChange={this.handleChange} />
-        <ContactList contacts={filteredContacts} />
+        <ContactList contacts={filteredContacts} onDelete={this.handleDelete} />
       </div>
     );
   }
