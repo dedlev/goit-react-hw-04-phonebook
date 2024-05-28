@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DeleteButton } from './ContactListItem.styled';
 
 export const ContactListItem = ({ contact, onDelete }) => {
   const { id, name, number } = contact;
@@ -11,9 +12,9 @@ export const ContactListItem = ({ contact, onDelete }) => {
     <li>
       <p>
         {name}: {number}
-        <button type="button" onClick={handleDelete}>
+        <DeleteButton type="button" onClick={handleDelete}>
           Delete
-        </button>
+        </DeleteButton>
       </p>
     </li>
   );
