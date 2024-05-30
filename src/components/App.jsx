@@ -5,14 +5,16 @@ import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { GlobalStyle } from './GlobalStyle';
 
+const usersData = [
+  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+];
+
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
@@ -27,11 +29,11 @@ export class App extends Component {
 
   handleAddContact = ({ name, number }) => {
     const { contacts } = this.state;
-    const isAvailableContact = contacts.some(
+    const isExistingContact = contacts.some(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
 
-    if (isAvailableContact) {
+    if (isExistingContact) {
       alert(`${name} is already in contacts.`);
       return;
     }
@@ -58,6 +60,23 @@ export class App extends Component {
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
+
+  componentDidMount() {
+    const users = JSON.parse(localStorage.getItem('contacts')) || usersData;
+
+    if (users) {
+      this.setState({ contacts: users });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.contacts.length !== 0 &&
+      this.state.contacts.length !== prevState.contacts.length
+    ) {
+    }
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
 
   render() {
     const { filter } = this.state;
