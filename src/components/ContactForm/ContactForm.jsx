@@ -4,7 +4,7 @@ import { Button, Form, FormInput } from './ContactForm.styled';
 
 export class ContactForm extends Component {
   state = {
-    name: '',
+    name: 'aa',
     number: '',
   };
 
