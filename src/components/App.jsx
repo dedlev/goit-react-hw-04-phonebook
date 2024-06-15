@@ -66,7 +66,7 @@ export class App extends Component {
 
     if (users) {
       this.setState({ contacts: users });
-    }
+    } 
   }
 
   componentDidUpdate(prevProps, prevState) {
