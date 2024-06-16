@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DeleteButton } from './ContactListItem.styled';
 
-export const ContactListItem = ({ contact, onDelete }) => {
-  const { id, name, number } = contact;
+export const ContactListItem = ({
+  contact: { id, name, number },
+  onDelete,
+}) => {
   const handleDelete = () => {
     onDelete(id);
   };
