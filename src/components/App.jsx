@@ -12,22 +12,23 @@ const usersData = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
-export const App = () => {   
-  const [contacts, setContacts] = useState(() => {
-    const users = JSON.parse(window.localStorage.getItem('contacts'));
-    if (users.length > 0) {
-      return (users)
-    } 
-    return (usersData);    
-    });
+const getInitialUsers = () => {
+  const users = JSON.parse(window.localStorage.getItem('contacts'));
+  return users.length > 0 ? users : usersData;
+};
+
+export const App = () => {
+  const [contacts, setContacts] = useState(getInitialUsers);
   const [filter, setFilter] = useState('');
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   const handleDelete = id => {
-    setContacts(prevContacts => prevContacts.filter(contact => contact.id !== id));
+    setContacts(prevContacts =>
+      prevContacts.filter(contact => contact.id !== id)
+    );
   };
 
   const handleAddContact = ({ name, number }) => {
