@@ -13,8 +13,8 @@ const usersData = [
 ];
 
 const getInitialUsers = () => {
-  const users = JSON.parse(window.localStorage.getItem('contacts'));
-  return users.length !== null ? users : usersData;
+  const usersStorageValue = window.localStorage.getItem('contacts');
+  return usersStorageValue?.length ? JSON.parse(usersStorageValue) : usersData;
 };
 
 export const App = () => {
