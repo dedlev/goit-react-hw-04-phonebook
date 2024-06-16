@@ -14,10 +14,7 @@ const usersData = [
 
 const getInitialUsers = () => {
   const users = JSON.parse(window.localStorage.getItem('contacts'));
-  if (users.length > 0) {
-    return users;
-  }
-  return usersData;
+  return users.length !== null ? users : usersData;
 };
 
 export const App = () => {
